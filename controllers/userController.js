@@ -1,6 +1,7 @@
 const Users = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const user = require('../models/user');
 
 
 // Fonction pour enrégistrer un nouvel utilisateur et crypter le mot de passe
@@ -20,9 +21,10 @@ const registerUser =  async (req, res) => {
             Password: data.Password,
             Promotion: data.Promotion
         };
-        const user = new Users (user_data);
-        await user.save();
+        const new_user = new Users(user_data);
+        let NewUser = await new_user.save();
         res.status(201).json({ message: 'Utilisateur Enrégistrer' });
+        console.log (new_user);
     } catch (error) {
         if (error.code === 11000 && error.keyPattern.Email && error.keyPattern) {
             return res.status(400).json({ error: true, message: 'Email déjà utilisé' });
@@ -35,22 +37,24 @@ const registerUser =  async (req, res) => {
 // Fonction pour se connecter
 const loginUser = async (req, res) => {
     try {
-        const { Email, Password } = req.body;
-        const user = await Users.findOne({ Email }, {projection: { _id: 0 } });
-        if (!user) {
+        let body = req.body;
+        let { Email, Password } = body;
+        const utilisateur = await Users.findOne({ Email });
+        console.log(utilisateur);
+        if (!utilisateur) {
             return res.status(400).json({ error: true, message: 'Email est invalide' });
         }
         // Vérification du mot de passe
-        const isPasswordValid = await bcrypt.compare(Password, user.Password);
+        const isPasswordValid = await bcrypt.compare(Password, utilisateur.Password);
         if (!isPasswordValid) {
             return res.status(400).json({ error: true, message: 'Mot de passe invalide' });   
         }
         // Génération du token
-        const token =  generateJwt(user);
+        const token =  generateJwt(utilisateur);
         res.status(200).json({
             message: 'Connexion réussie',
             data:token,
-            user});
+            utilisateur});
     } catch (error) {
         res.status(500).json({ error: true, message: 'Erreur lors de la connexion, Veuilez réessayer' });
     }

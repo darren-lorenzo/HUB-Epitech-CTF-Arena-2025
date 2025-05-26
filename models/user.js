@@ -2,12 +2,11 @@
 const mongoose = require('mongoose');
 const Roles =  require("./roles.js");
 
-//Definition du shema mongoose pour les utilisateurs
+//Definition du schema mongoose pour les utilisateurs
 const userSchema = new mongoose.Schema({
   Nom: { type: String, required: true },
   Prenom: { type: String, required: true },
   Email: { type: String, required: true, unique: true },
-  Role: { type: String, enum: [Roles[0].role.id, Roles[1].role.id], required: false},
   Sexe: { type: String, enum: ['Masculin', 'Feminin'], required: false},
   Password: { type: String, required: true },
   Promotion : {type: String, required: false},
