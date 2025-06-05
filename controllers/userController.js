@@ -1,10 +1,11 @@
 const Users = require('../models/user');
+const Scoreboard = require('../models/scoreboard.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const user = require('../models/user');
 
 
-// Fonction pour enrégistrer un nouvel utilisateur et crypter le mot de passe
+// Fonction pour enrégistrer un nouvel utilisateur, crypter le mot de passe et créer son ranking.
 
 const registerUser =  async (req, res) => {
     const data = req.body;
@@ -17,12 +18,21 @@ const registerUser =  async (req, res) => {
         const user_data = {
             Nom: nv_nom,
             Prenom: nv_prenom,
+            Alias: data.Alias,
             Email: data.Email,
             Password: data.Password,
-            Promotion: data.Promotion
+            Affiliation: data.Affiliation
         };
         const new_user = new Users(user_data);
         let NewUser = await new_user.save();
+        const ranking_data = {
+            username: data.Alias,
+            affiliation: data.Affiliation,
+            score: 0,
+            id_user: NewUser._id
+        }
+        const userboard = new Scoreboard(ranking_data);
+        let newBoard = await userboard.save();
         res.status(201).json({ message: 'Utilisateur Enrégistrer' });
         console.log (new_user);
     } catch (error) {
@@ -59,6 +69,11 @@ const loginUser = async (req, res) => {
         res.status(500).json({ error: true, message: 'Erreur lors de la connexion, Veuilez réessayer' });
     }
 };
+
+const UserProfile = async (req, res) => {
+
+}
+
 
 // Fonction pour générer le token
 const generateJwt= (identity) =>{

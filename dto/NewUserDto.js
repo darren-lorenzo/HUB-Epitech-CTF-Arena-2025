@@ -6,7 +6,6 @@ exports.NewUserDto = object({
         Prenom: string().required('Last name is required'),
         Email: string().email().required('Email is required'),
         Password: string().min(8).max(20).required('Password is required'),
-        Promotion: string().required('Promotion is required'),
-        // phoneNumber: string().matches(/^\d{10}$/, 'Phone number must be 10 digits').required('Phone number is required'),
+        Alias: string().required('Alias is required'),
     }),
 });
