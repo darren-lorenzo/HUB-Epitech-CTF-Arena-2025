@@ -71,8 +71,32 @@ const loginUser = async (req, res) => {
 };
 
 const UserProfile = async (req, res) => {
+    try {
+        const userId = req.user.identity._id; // Récupération de l'ID de l'utilisateur à partir du token
+        const user = await Users.findById(userId).select('-Password'); // Exclure le mot de passe du résultat
+        if (!user) {
+            return res.status(404).json({ error: true, message: 'Utilisateur non trouvé' });
+        }
+        res.status(200).json({ message: 'Profil utilisateur récupéré avec succès', data: user });
+    } catch (error) {
+        res.status(500).json({ error: true, message: 'Erreur lors de la récupération du profil utilisateur' });
+    }
 
 }
+
+const userBoard = async (req, res) => {
+    try {
+        const userId = req.user.identity._id; // Récupération de l'ID de l'utilisateur à partir du token
+        const user = await Scoreboard.findOne({ id_user: userId });
+        if (!user) {
+            return res.status(404).json({ error: true, message: 'Classement utilisateur non trouvé' });
+        }
+        res.status(200).json({ message: 'Classement utilisateur récupéré avec succès', data: user });
+    } catch (error) {
+        res.status(500).json({ error: true, message: 'Erreur lors de la récupération du classement utilisateur' });
+    }
+}
+
 
 
 // Fonction pour générer le token
@@ -97,4 +121,6 @@ const generateJwt= (identity) =>{
   module.exports = {
     registerUser,
     loginUser,
+    UserProfile,
+    userBoard
   };
