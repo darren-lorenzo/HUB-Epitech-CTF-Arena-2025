@@ -10,15 +10,16 @@ const Register = () => {
     password: '',
     nom: '',
     prenom: '',
+    entreprise: '',
   });
   const [error, setError] = useState('');
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleChange = (e) => {
-    setFormData({ 
-      ...formData, 
-      [e.target.name]: e.target.value 
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
     });
   };
 
@@ -84,6 +85,16 @@ const Register = () => {
               name="surnom"
               required
               value={formData.surnom}
+              onChange={handleChange}
+              className="mt-1 w-full p-2 rounded bg-white text-black"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-violet-400">Entreprise</label>
+            <input
+              type="text"
+              name="entreprise"
+              value={formData.entreprise}
               onChange={handleChange}
               className="mt-1 w-full p-2 rounded bg-white text-black"
             />
