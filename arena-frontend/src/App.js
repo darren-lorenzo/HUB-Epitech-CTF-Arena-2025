@@ -1,19 +1,19 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Register  from './Register';
+import Register from './Register';
 import Login from './Login';
 import UserProfile from './Profil';
 import HomePage from './Home';
-import Logout from './Logout';
+import NotFoundPage from './NotFoundPage';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
         <Route path="/" element={<HomePage />} />
-        <Route path="/" element={<Register />} />
-        <Route path="/logout" element={<Logout />} />
-        <Route path="/profil" element={<UserProfile />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<UserProfile />} />
+        <Route path="/404" element={<NotFoundPage />} />
       </Routes>
     </Router>
   );

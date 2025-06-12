@@ -6,18 +6,19 @@ import "./Register.css"
 const Register = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    email: '',
-    surnom: '',
-    password: '',
-    nom: '',
-    prenom: '',
-    entreprise: '',
+    Email: '',       // Changé de 'email' à 'Email'
+    Alias: '',       // Changé de 'surnom' à 'Alias'
+    Password: '',    // Changé de 'password' à 'Password'
+    Nom: '',         // Changé de 'nom' à 'Nom'
+    Prenom: '',      // Changé de 'prenom' à 'Prenom'
+    Affiliation: '', // Changé de 'entreprise' à 'Affiliation'
   });
   const [error, setError] = useState('');
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleChange = (e) => {
+    // Cette partie reste la même car e.target.name correspondra maintenant aux nouvelles clés
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -28,7 +29,8 @@ const Register = () => {
     e.preventDefault();
     setError('');
 
-    if (!validateEmail(formData.email)) {
+    // Utilisez la bonne clé pour la validation de l'email
+    if (!validateEmail(formData.Email)) { // Changé de formData.email
       setError('Veuillez entrer une adresse email valide.');
       return;
     }
@@ -50,9 +52,9 @@ const Register = () => {
             <label className="block text-sm font-medium text-violet-400">Nom</label>
             <input
               type="text"
-              name="nom"
+              name="Nom" // Changé de "nom" à "Nom"
               required
-              value={formData.nom}
+              value={formData.Nom} // Changé de formData.nom
               onChange={handleChange}
               className="mt-1 w-full p-2 rounded bg-white text-black"
             />
@@ -61,9 +63,9 @@ const Register = () => {
             <label className="block text-sm font-medium text-violet-400">Prénom</label>
             <input
               type="text"
-              name="prenom"
+              name="Prenom" // Changé de "prenom" à "Prenom"
               required
-              value={formData.prenom}
+              value={formData.Prenom} // Changé de formData.prenom
               onChange={handleChange}
               className="mt-1 w-full p-2 rounded bg-white text-black"
             />
@@ -72,9 +74,9 @@ const Register = () => {
             <label className="block text-sm font-medium text-violet-400">Email</label>
             <input
               type="email"
-              name="email"
+              name="Email" // Changé de "email" à "Email"
               required
-              value={formData.email}
+              value={formData.Email} // Changé de formData.email
               onChange={handleChange}
               className="mt-1 w-full p-2 rounded bg-white text-black"
             />
@@ -83,19 +85,19 @@ const Register = () => {
             <label className="block text-sm font-medium text-violet-400">Surnom</label>
             <input
               type="text"
-              name="surnom"
+              name="Alias" // Changé de "surnom" à "Alias"
               required
-              value={formData.surnom}
+              value={formData.Alias} // Changé de formData.surnom
               onChange={handleChange}
               className="mt-1 w-full p-2 rounded bg-white text-black"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-violet-400">Entreprise</label>
+            <label className="block text-sm font-medium text-violet-400">Entreprise / Affiliation</label>
             <input
               type="text"
-              name="entreprise"
-              value={formData.entreprise}
+              name="Affiliation" // Changé de "entreprise" à "Affiliation"
+              value={formData.Affiliation} // Changé de formData.entreprise
               onChange={handleChange}
               className="mt-1 w-full p-2 rounded bg-white text-black"
             />
@@ -104,9 +106,9 @@ const Register = () => {
             <label className="block text-sm font-medium text-violet-400">Mot de passe</label>
             <input
               type="password"
-              name="password"
+              name="Password" // Changé de "password" à "Password"
               required
-              value={formData.password}
+              value={formData.Password} // Changé de formData.password
               onChange={handleChange}
               className="mt-1 w-full p-2 rounded bg-white text-black"
             />
