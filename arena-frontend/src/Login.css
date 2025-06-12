@@ -1,7 +1,11 @@
 /* Login.css */
 body {
   margin: 0;
+  display: flex;
   font-family: 'Segoe UI', sans-serif;
+  justify-content:center;
+  align-items: center;
+  min-height: 110vh;
   background: url('background.jpg') no-repeat center center fixed;
   background-size: cover;
   color: white;
@@ -20,14 +24,16 @@ body {
   h2 {
     font-size: 2rem;
     font-weight: 600;
-    color: rgba(0, 15, 45, 0.9);
+    background-color: rgba(0, 15, 45, 0.9);
+    box-shadow: 0 4px 15px rgba(0, 15, 45, 0.9);
+    color: white;
     margin-bottom: 2rem;
     text-align: center;
   }
   
   form {
-    background-color: white;
-    padding: 2rem;
+    background-color: rgba(0, 15, 45, 0.9);
+    padding: 3rem;
     border-radius: 0.375rem;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     width: 100%;
@@ -38,7 +44,7 @@ body {
     display: block;
     font-size: 0.875rem;
     font-weight: 500;
-    color: #4b5563;
+    color: white;
     margin-bottom: 0.5rem;
   }
   
@@ -48,8 +54,8 @@ body {
     margin-bottom: 1.5rem;
     border-radius: 0.375rem;
     border: 1px solid #e5e7eb;
-    background-color: #f9fafb;
-    color: #333;
+    background-color: rgba(0, 15, 45, 0.9);
+    color: white;
     font-size: 1rem;
     outline: none;
     transition: border-color 0.2s;
@@ -89,7 +95,7 @@ body {
   p {
     text-align: center;
     font-size: 0.875rem;
-    color: #4b5563;
+    color: white;
   }
   
   p a {

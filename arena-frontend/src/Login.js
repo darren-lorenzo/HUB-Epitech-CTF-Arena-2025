@@ -35,7 +35,7 @@ function Login() {
 
     return (
         <div className="login-page">
-            <h2>Connexion</h2>
+            <h2>Login</h2>
             {error && <p className="error">{error}</p>}
             <form onSubmit={handleSubmit}>
                 <label>Email</label>
@@ -47,7 +47,7 @@ function Login() {
                     onChange={handleChange} 
                 />
 
-                <label>Mot de passe</label>
+                <label>Password</label>
                 <input 
                     type="password" 
                     name="password" 
@@ -56,7 +56,7 @@ function Login() {
                     onChange={handleChange} 
                 />
 
-                <button type="submit">Se connecter</button>
+                <button type="submit">submit</button>
             </form>
             <p>Pas encore inscrit ? <Link to="/register">Créer un compte</Link></p>
         </div>
