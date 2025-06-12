@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axiosInstance from 'axiosInstance';
+import axiosSetup from './axiosSetup';
 
 function Login() {
     const navigate = useNavigate();
@@ -22,7 +22,7 @@ function Login() {
         setError('');
         
         try {
-            const response = await axiosInstance.post('/login', formData); // URL de l'API de connexion
+            const response = await axiosSetup.post('/login', formData); // URL de l'API de connexion
             console.log('Connexion réussie:', response.data);
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('idUtilisateur', response.data.idUtilisateur);

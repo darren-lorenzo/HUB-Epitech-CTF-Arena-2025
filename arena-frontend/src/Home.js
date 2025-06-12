@@ -1,6 +1,4 @@
 import React from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { User, ShieldCheck, ListOrdered, PlusSquare } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -45,14 +43,19 @@ const HomePage = () => {
             whileTap={{ scale: 0.95 }}
             className="cursor-pointer"
           >
-            <Card onClick={section.action} className="p-4 shadow-md hover:shadow-lg transition duration-300">
-              <CardContent className="flex flex-col items-center text-center space-y-4">
+            <div
+              onClick={section.action}
+              className="p-4 shadow-md hover:shadow-lg transition duration-300 bg-white rounded-lg" // Added bg-white and rounded-lg for card appearance
+            >
+              <div className="flex flex-col items-center text-center space-y-4">
                 {section.icon}
                 <h2 className="text-xl font-semibold text-gray-700">{section.title}</h2>
                 <p className="text-gray-500 text-sm">{section.description}</p>
-                <Button>{section.title}</Button>
-              </CardContent>
-            </Card>
+                <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
+                  {section.title}
+                </button>
+              </div>
+            </div>
           </motion.div>
         ))}
       </div>

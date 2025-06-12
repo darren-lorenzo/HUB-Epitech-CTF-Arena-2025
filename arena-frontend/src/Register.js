@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axiosInstance from 'axiosSetup'; // Assure-toi que ce chemin est correct
+import axiosSetup from './axiosSetup';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ const Register = () => {
     }
 
     try {
-      await axiosInstance.post('/register', formData);
+      await axiosSetup.post('/register', formData);
       navigate('/login');
     } catch (err) {
       setError(err.response?.data?.message || "Erreur lors de l'inscription.");

@@ -1,21 +1,20 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import axiosInstance from './axiosSetup';
-import Home from './Home';
+import Register  from './Register';
 import Login from './Login';
-import Register from './Register';
-import './App.css';
+import UserProfile from './Profil';
+import HomePage from './Home';
+import Logout from './Logout';
 
 function App() {
   return (
     <Router>
-      <div className="App">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/logout" element={<Logout />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/profil" element={<UserProfile />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
     </Router>
   );
 }

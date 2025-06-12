@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axiosInstance from 'axiosInstance';
+import axiosSetup from './axiosSetup';
+
 
 function Logout () {
     const navigate = useNavigate();
@@ -8,7 +9,7 @@ function Logout () {
 
     const handleLogout = async () => {
         try {
-            await axiosInstance.post('/logout'); // URL de l'API de déconnexion
+            await axiosSetup.post('/logout'); // URL de l'API de déconnexion
             localStorage.removeItem('token');
             localStorage.removeItem('idUtilisateur');
             navigate('/login');
