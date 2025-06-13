@@ -70,7 +70,7 @@ const UserScoreboard = () => {
         {userScore ? (
           <div className="space-y-4 text-center">
             <div>
-              <h2 className="text-lg font-semibold text-violet-400">Alias</h2>
+              <h2 className="text-lg font-semibold text-violet-40">Alias</h2>
               <p className="text-white text-2xl font-bold">{userScore.username}</p>
             </div>
             {userScore.affiliation && (
