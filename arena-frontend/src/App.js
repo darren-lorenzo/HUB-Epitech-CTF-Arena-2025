@@ -4,6 +4,9 @@ import Login from './Login';
 import UserProfile from './Profil';
 import HomePage from './Home';
 import Logout from './Logout';
+import UserScoreboard from './ScoreBoardUser';
+import GlobalScoreboard from './ScoreBoard';
+import NotFoundPage from './NotFoundPage';
 
 function App() {
   return (
@@ -14,6 +17,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/profil" element={<UserProfile />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/scoreboard/user" element={<UserScoreboard />} />
+        <Route path="/scoreboard/global" element={<GlobalScoreboard />} />
+        <Route path="/404" element={<NotFoundPage />} />
       </Routes>
     </Router>
   );
