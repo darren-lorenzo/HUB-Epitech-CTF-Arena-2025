@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "80:80" # Mappe le port 80 du conteneur au port 80 de votre machine hôte
+    volumes:
+      # Monte le dossier 'app' de votre machine hôte vers /var/www/html dans le conteneur.
+      # Utile pour le développement : les changements dans 'app' sont reflétés sans reconstruire l'image.
+      # Pour un déploiement final CTF, vous pouvez commenter cette ligne et laisser le COPY dans le Dockerfile faire le travail.
+      - ./app:/var/www/html
+    environment:
+      # Vous pouvez ajouter des variables d'environnement ici si nécessaire pour PHP
+      PHP_INI_DIR: /usr/local/etc/php
