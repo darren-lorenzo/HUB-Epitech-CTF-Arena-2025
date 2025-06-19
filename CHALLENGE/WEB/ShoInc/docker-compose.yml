@@ -4,7 +4,7 @@ services:
   web:
     build: .
     ports:
-      - "80:80" # Mappe le port 80 du conteneur au port 80 de votre machine hôte
+      - "3000:80" # Mappe le port 80 du conteneur au port 80 de votre machine hôte
     volumes:
       # Monte le dossier 'app' de votre machine hôte vers /var/www/html dans le conteneur.
       # Utile pour le développement : les changements dans 'app' sont reflétés sans reconstruire l'image.

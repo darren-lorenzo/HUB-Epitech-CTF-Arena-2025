@@ -24,7 +24,7 @@ RUN mkdir -p /var/www/html/data /var/www/html/static && \
     chown -R www-data:www-data /var/www/html/data /var/www/html/static
 
 # Exposez le port 80
-EXPOSE 80
+EXPOSE 3000
 
 # Commande par défaut pour lancer Apache
 CMD ["apache2-foreground"]
