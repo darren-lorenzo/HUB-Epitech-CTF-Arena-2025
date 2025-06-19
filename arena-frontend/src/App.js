@@ -4,6 +4,15 @@ import Login from './Login';
 import UserProfile from './Profil';
 import HomePage from './Home';
 import NotFoundPage from './NotFoundPage';
+import HomeChallenges from './HomeChallenges'
+import WebChallenges from './WebChallenges';
+import WebChallengeDetail from './WebChallengeDetail';
+import CryptoChallenges from './CryptoChallenges'
+import CryptoChallengeDetail from './CryptoChallengeDetail'
+import OsintChallenges from './OsintChallenges'
+import OsintChallengeDetail from './OsintChallengeDetail'
+import SteganoChallenges from './SteganoChallenges'
+import SteganoChallengeDetail from './SteganoChallengeDetail'
 
 function App() {
   return (
@@ -13,6 +22,15 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<UserProfile />} />
+        <Route path="/challenges" element={<HomeChallenges />} />
+        <Route path="/challenges/web" element={<WebChallenges />} />
+        <Route path="/challenges/web/:challengeId" element={<WebChallengeDetail />} />
+        <Route path="/challenges/crypto" element={<CryptoChallenges />} />
+        <Route path="/challenges/crypto/:challengeId" element={<CryptoChallengeDetail />} />
+        <Route path="/challenges/osint" element={<OsintChallenges />} />
+        <Route path="/challenges/osint/:challengeId" element={<OsintChallengeDetail />} />
+        <Route path="/challenges/steganographie" element={<SteganoChallenges />} />
+        <Route path="/challenges/steganographie/:challengeId" element={<SteganoChallengeDetail />} />
         <Route path="/404" element={<NotFoundPage />} />
       </Routes>
     </Router>
