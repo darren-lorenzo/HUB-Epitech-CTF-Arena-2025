@@ -13,6 +13,9 @@ import OsintChallenges from './OsintChallenges'
 import OsintChallengeDetail from './OsintChallengeDetail'
 import SteganoChallenges from './SteganoChallenges'
 import SteganoChallengeDetail from './SteganoChallengeDetail'
+import UserScoreboard from './ScoreBoardUser';
+import GlobalScoreboard from './ScoreBoard';
+import NotFoundPage from './NotFoundPage';
 
 function App() {
   return (
@@ -31,6 +34,9 @@ function App() {
         <Route path="/challenges/osint/:challengeId" element={<OsintChallengeDetail />} />
         <Route path="/challenges/steganographie" element={<SteganoChallenges />} />
         <Route path="/challenges/steganographie/:challengeId" element={<SteganoChallengeDetail />} />
+        <Route path="/404" element={<NotFoundPage />} />
+        <Route path="/scoreboard/user" element={<UserScoreboard />} />
+        <Route path="/scoreboard/global" element={<GlobalScoreboard />} />
         <Route path="/404" element={<NotFoundPage />} />
       </Routes>
     </Router>
