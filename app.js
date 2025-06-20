@@ -4,6 +4,7 @@ const app = express();
 const cors = require('cors');
 const Board = require('./routes/board.js');
 const Authorization = require('./routes/authorization.js');
+const Challenges = require('./routes/challenges.js');
 
 require('dotenv').config();
 
@@ -19,6 +20,7 @@ app.use(express.json());
 // Routes
 app.use('/api/auth', Authorization);
 app.use('/api/board', Board);
+app.use('/api/ctf', Challenges); 
 
 
 // Listening to the server

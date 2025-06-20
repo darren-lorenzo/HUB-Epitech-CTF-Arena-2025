@@ -12,6 +12,5 @@ const userSchema = new mongoose.Schema({
   Affiliation : {type: String, required: false},
 });
 
-
 //Exports du modèle pour l'utiliser ailleurs dans l'application
 module.exports = mongoose.model('Users', userSchema);

@@ -5,6 +5,11 @@ const scoreSchema = new mongoose.Schema({
     username: {type: String, required: true},
     affiliation: {type: String, required: true},
     score: {type: Number, required: true},
+    solved_challenges: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Challenge',
+        required: false
+    }],
 });
 
 

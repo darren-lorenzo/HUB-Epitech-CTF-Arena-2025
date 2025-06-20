@@ -1,23 +1,45 @@
 const jwt = require('jsonwebtoken');
 
 const authMiddleware = (req, res, next) => {
-    let token = req.headers['Authorization'];
+    // Check if JWT secret is configured
+    if (!process.env.JWT_SECRET) {
+        return res.status(500).json({ 
+            error: true, 
+            message: 'Server configuration error' 
+        });
+    }
 
+    // Get token from header (case-insensitive)
+    let token = req.headers['authorization'] || req.headers['Authorization'];
+    
     if (!token) {
-        return res.status(400).json({ error: true, message: 'Acess Denied. No token provided' });
+        return res.status(401).json({ 
+            error: true, 
+            message: 'Access Denied. No token provided' 
+        });
     }
 
+    // Extract token from Bearer scheme
     if (token.startsWith('Bearer ')) {
-        token = token.split(' ')[1];
+        token = token.slice(7, token.length).trimLeft();
     } else {
-        return res.status(400).json({ error: true, message: 'Acess Denied. Invalid token format' });
+        return res.status(401).json({ 
+            error: true, 
+            message: 'Access Denied. Invalid token format' 
+        });
     }
+
+    // Verify token
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.user = decoded;
         next();
     } catch (error) {
-        return res.status(400).json({ error: true, message: 'Acess Denied. Invalid token' });
+        return res.status(401).json({ 
+            error: true, 
+            message: 'Access Denied. Invalid token',
+            details: error.message 
+        });
     }
 };
 
