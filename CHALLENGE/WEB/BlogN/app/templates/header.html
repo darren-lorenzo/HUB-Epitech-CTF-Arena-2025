@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog'N'Upload</title>
+    <link rel="stylesheet" href="templates/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Blog'N'Upload</h1>
+        <nav>
+            <a href="index.php">Accueil</a>
+            <?php if (isset($_SESSION['username'])): ?>
+                <a href="profile.php">Profil (<?php echo htmlspecialchars($_SESSION['username']); ?>)</a>
+                <a href="logout.php">Déconnexion</a>
+            <?php else: ?>
+                <a href="login.php">Connexion</a>
+                <a href="register.php">Inscription</a>
+            <?php endif; ?>
+        </nav>
+        <hr>
