@@ -9,14 +9,45 @@ const challenges = [
 
 function WebChallenges() {
   const navigate = useNavigate();
+  const [allchallenges, setChallenges] = useState({
+        cryptography: [],
+        steganography: [],
+        web: [],
+        osint: []
+    });
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchChallenges = async () => {
+            try {
+                const response = await axios.get('/api/getChallenges');
+                setChallenges(response.data);
+            } catch (err) {
+                setError('Une erreur est survenue lors de la récupération des challenges.');
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchChallenges();
+    }, []);
+
+    if (loading) {
+        return <div className="loading">Chargement en cours...</div>;
+    }
+    if (error) {
+        return <div className="error">{error}</div>;
+    }
 
   return (
     <div>
       <h2>Challenges Web</h2>
       <ul>
-        {challenges.map((challenge) => (
-          <li key={challenge.id} onClick={() => navigate(`/challenges/web/${challenge.id}`)} style={styles.challenge}>
-            <strong>{challenge.name}</strong> — {challenge.difficulty} — {challenge.points} pts
+        {allchallenges.map((challenge) => (
+          <li key={challenge._id} onClick={() => navigate(`/challenges/web/${challenge._id}`)} style={styles.challenge}>
+            <strong>{challenge.Nom}</strong> — {challenge.Difficulty} — {challenge.Points} pts
           </li>
         ))}
       </ul>
