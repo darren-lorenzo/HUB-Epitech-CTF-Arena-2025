@@ -1,64 +1,105 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-
-// Exemple statique, tu pourras plus tard charger ça depuis une API
-const challengeDetails = {
-  'xss-basic': {
-    title: 'XSS Basique',
-    description: 'Trouvez et exploitez une faille XSS simple dans un formulaire.',
-    points: 100,
-    difficulty: 'Facile',
-    launchUrl: 'https://challenge.example.com/xss-basic',
-    expectedFlag: 'FLAG{basic_xss_123}',
-  },
-  'sql-injection': {
-    title: 'Injection SQL',
-    description: 'Trouvez une injection SQL dans le champ login.',
-    points: 200,
-    difficulty: 'Moyen',
-    launchUrl: 'https://challenge.example.com/sql-injection',
-    expectedFlag: 'FLAG{sql_inject_power}',
-  },
-  'csrf-bypass': {
-    title: 'CSRF Token Bypass',
-    description: 'Contournez la protection CSRF sur un formulaire critique.',
-    points: 300,
-    difficulty: 'Difficile',
-    launchUrl: 'https://challenge.example.com/csrf-bypass',
-    expectedFlag: 'FLAG{csrf-bypass-likeaboss}',
-  },
-};
+import axiosInstance from './axiosSetup';
 
 function WebChallengeDetail() {
-  const { challengeId } = useParams();
-  const challenge = challengeDetails[challengeId];
+  const { id } = useParams();
 
+  const [challenge, setChallenge] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [flag, setFlag] = useState('');
-  const [feedback, setFeedback] = useState('');
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState(''); // 'success' or 'error'
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const challengeIdToFetch = id;
+
+  useEffect(() => {
+    const fetchChallenge = async () => {
+      if (!challengeIdToFetch) {
+        setLoading(false);
+        setError("Challenge ID or Type is missing.");
+        return;
+      }
+
+      try {
+        setLoading(true);
+        setError(null);
+
+        const response = await axiosInstance.post(`challenges/${challengeIdToFetch}`, {
+          type: "web",
+        });
+
+        setChallenge(response.data);
+      } catch (err) {
+        console.error(`Error fetching web challenge (ID: ${challengeIdToFetch}):`, err);
+        setError(err.response?.data?.message || 'Failed to load challenge details. Please try again.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchChallenge();
+  }, [challengeIdToFetch]);
+
+  if (loading) {
+    return <div className="text-center p-4 text-xl">Loading challenge details...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center text-red-600 p-4 text-xl">Error: {error}</div>;
+  }
 
   if (!challenge) {
-    return <p>Challenge introuvable.</p>;
+    return <div className="text-center p-4 text-xl">Challenge not found or no data available.</div>;
   }
 
   const handleLaunch = () => {
-    window.open(challenge.launchUrl, '_blank');
+    window.open(challenge.URL, '_blank');
   };
 
-  const handleFlagSubmit = () => {
-    if (flag.trim() === challenge.expectedFlag) {
-      setFeedback('Bravo ! Flag correct !');
-    } else {
-      setFeedback('Mauvais flag, réessaie encore.');
+  const handleFlagSubmit = async () => {
+    if (!flag) {
+      setMessage('Please enter a flag.');
+      setMessageType('error');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setMessage('');
+    setMessageType('');
+
+    try {
+      const response = await axiosInstance.post(`/challenges/${id}/submit`, {
+        challengeId: challengeIdToFetch,
+        challengeType: "web",
+        submittedFlag: flag,
+      });
+
+      if (response.data.success) {
+        setMessage(response.data.message);
+        setMessageType('success');
+      } else {
+        setMessage(response.data.message || 'An unknown error occurred during submission.');
+        setMessageType('error');
+      }
+    } catch (error) {
+      console.error('Submission error:', error);
+      setMessage(error.response?.data?.message || 'Failed to submit flag. Please try again.');
+      setMessageType('error');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
     <div style={styles.container}>
-      <h2>{challenge.title}</h2>
+      <h2>{challenge.Nom}</h2>
 
-      <p><strong>Difficulté:</strong> {challenge.difficulty}</p>
-      <p><strong>Points:</strong> {challenge.points}</p>
-      <p><strong>Description:</strong> {challenge.description}</p>
+      <p><strong>Difficulté:</strong> {challenge.Difficulty}</p>
+      <p><strong>Points:</strong> {challenge.Points}</p>
+      <p><strong>Description:</strong> {challenge.Description}</p>
 
       <button style={styles.launchButton} onClick={handleLaunch}>
           Lancer le challenge
@@ -73,10 +114,14 @@ function WebChallengeDetail() {
           placeholder="FLAG{...}"
           style={styles.input}
         />
-        <button style={styles.submitButton} onClick={handleFlagSubmit}>
+        <button style={styles.submitButton} onClick={handleFlagSubmit} disabled={isSubmitting}>
           Soumettre
         </button>
-        {feedback && <p>{feedback}</p>}
+        {message && (
+          <p style={{ color: messageType === 'success' ? '#238636' : '#ff4d4f', marginTop: '10px' }}>
+            {message}
+          </p>
+        )}
       </div>
 
       <Link to="/challenges/web/">← Retour aux challenges Web</Link>

@@ -16,6 +16,8 @@ import SteganoChallengeDetail from './SteganoChallengeDetail'
 import UserScoreboard from './ScoreBoardUser';
 import GlobalScoreboard from './ScoreBoard';
 import NotFoundPage from './NotFoundPage';
+import ChallengeList from './ChallengeList';
+import ChallengeDetail from './ChallengesDetails';
 
 function App() {
   return (
@@ -25,7 +27,9 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<UserProfile />} />
-        <Route path="/challenges" element={<HomeChallenges />} />
+        <Route path="/challengespage" element={<HomeChallenges />} />
+        <Route path="/challenges" element={<ChallengeList />} />
+        <Route path="/challenges/:challengeId" element={<ChallengeDetail />} />
         <Route path="/challenges/web" element={<WebChallenges />} />
         <Route path="/challenges/web/:challengeId" element={<WebChallengeDetail />} />
         <Route path="/challenges/crypto" element={<CryptoChallenges />} />
